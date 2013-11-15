@@ -3,11 +3,19 @@
 window.onload = function(){
 
 	// I denna funktion ska du skriva koden för att hantera "spelet"
-	var convertString = function(str){
-		// Plats för förändring.		
-		// Returnera den konverterade strängen.
-		// Vid fel, kasta ett undantag med ett meddelande till användaren. 
-	
+    var convertString = function (str) {
+
+        // Plats för förändring.
+
+        var conv = str.toLowerCase().toUppercase;
+
+        // Returnera den konverterade strängen.
+
+        return conv;
+
+        // Vid fel, kasta ett undantag med ett meddelande till användaren.
+
+
 
 
 
