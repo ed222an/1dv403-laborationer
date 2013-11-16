@@ -6,22 +6,23 @@ window.onload = function(){
     var convertString = function (str) {
 
         // Plats för förändring.
-
-        var conv = str.toLowerCase().toUppercase;
-
-        // Returnera den konverterade strängen.
-
-        return conv;
-
         // Vid fel, kasta ett undantag med ett meddelande till användaren.
+        if (str == "") {
+            alert("FEL! Mata in en textsträng!");
+        }
+        else {
+            // For-loop som itererar igenom strängen, kollar efter de bestämda tecknen och inverterar versaler och gemener.
+            var s = '';
+            for (var i = 0; i < str.length; i++) {
+                var n = str.charAt(i);
 
+                // Är n = a eller A görs de om till #, annars omvandlas den från versal till gemen och vice versa.
+                s += (n == 'a' || n == 'A' ? '#' : n == n.toLocaleUpperCase() ? n.toLocaleLowerCase() : n.toLocaleUpperCase());
+            }
 
-
-
-
-
-
-
+            // Returnera den konverterade strängen.
+            return s;
+        }
 	};
 	// ------------------------------------------------------------------------------
 
