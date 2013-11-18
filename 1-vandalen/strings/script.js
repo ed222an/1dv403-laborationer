@@ -8,7 +8,7 @@ window.onload = function(){
         // Plats för förändring.
         // Vid fel, kasta ett undantag med ett meddelande till användaren.
         if (str == "") {
-            alert("FEL! Mata in en textsträng!");
+            throw new Error("FEL! Mata in en textsträng!");
         }
         else {
             // For-loop som itererar igenom strängen, kollar efter de bestämda tecknen och inverterar versaler och gemener.

@@ -3,11 +3,10 @@
 window.onload = function(){
 
 	
-	var birthday = function(date){
-		
+    var birthday = function (date) {
 
+        // Din kod här.
 
-			// Din kod här.
 
 
 
