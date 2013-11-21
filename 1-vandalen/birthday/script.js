@@ -15,19 +15,16 @@ window.onload = function(){
         }
 
         //Skapar Date-objekt för jämförelse av födelsedar och dagens datum.
-
-        var dateParts = date.split("-");
-
         var now = new Date()
         var currentYear = now.getFullYear()
-        var dateEnd = new Date(currentYear, dateParts[1] - 1, dateParts[2]); // -1 på månaderna eftersom de har talbasen 0.
+        var dateEnd = new Date(date+"T23:59:59"); // -1 på månaderna eftersom de har talbasen 0.
 
         // Har datumet redan passerats så läggs det på 1 på nuvarande året. Detta gör att det skrivs ut heltal istället för negativa tal.
         if (dateEnd - now < 0) {
             dateEnd.setFullYear(currentYear + 1);
         }
 
-        return Math.ceil((dateEnd - now) / 1000 / 60 / 60 / 24);
+        return Math.floor((dateEnd - now) / (1000 * 60 * 60 * 24));
 
 	};
 	// ------------------------------------------------------------------------------
