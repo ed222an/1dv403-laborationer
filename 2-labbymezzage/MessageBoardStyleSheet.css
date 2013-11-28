@@ -1,1 +1,48 @@
-﻿
+﻿/*General attributes*/
+
+#container {
+    margin:auto;
+    width:1000px; height:auto;
+    padding-bottom:20px;
+    background-color:black;
+    color:white;
+    font-family:Aharoni;
+}
+
+#header {
+    padding:10px;
+    font-size: 30px;
+}
+
+#previousMessages {
+    border-bottom:groove 2px white;
+    margin-left:50px;
+    margin-right:50px;
+    padding-bottom:5px;
+}
+#textBoxContainer {
+    margin-top:20px;
+    margin-left:200px;
+    margin-right:200px;
+    padding:20px;
+    background-color:white;
+}
+#textBox {
+    width:400px; height:100px;
+}
+
+#buttonContainer {
+    margin-top:-6px;
+    margin-right:74px;
+    height:10px;
+}
+
+#button {
+    float:right;
+}
+
+/* Classes */
+
+.centerAlign {
+    text-align:center;
+}

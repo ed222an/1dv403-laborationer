@@ -7,16 +7,16 @@
     <link rel="stylesheet" href="MessageBoardStyleSheet.css" />
 </head>
 <body>
-    <div id="header">Labby mezzage</div>
-    <div id="previousMessages">Gamla meddelanden hamnar här</div>
-    <div id="textbox">
-        <fieldset>
-            <legend>Antal meddelanden:0</legend>
-            <textarea></textarea>
-            <input id="button" type="submit" value="skriv" />
-        </fieldset>
+    <div id="container" class="centerAlign">
+        <div id="header">Labby mezzage</div>
+        <div id="previousMessages">Gamla meddelanden hamnar här</div>
+        <div id="textBoxContainer">
+            <textarea id="textBox"></textarea>
+            <div id="buttonContainer">
+                <input id="button" type="submit" value="skriv" />
+            </div>
+        </div>
     </div>
-
     <script src="MessageBoard.js"></script>
     <script src="Message.js"></script>
 </body>
