@@ -36,8 +36,29 @@ var MessageBoard = {
 
         MessageBoard.messages.push(mess); // Lägger till det nya message-objeket i en array med meddelanden.
 
-        document.getElementById("textBox").value = ""; // Tar bort den skrivna texten från textfältet.
+        //document.getElementById("textBox").value = ""; // Tar bort den skrivna texten från textfältet.
 
+    },
+
+    renderMessages: function () {
+
+        // Tar bort alla meddelanden
+        document.getElementById("textBox").innerHTML = "";
+
+        // Visar alla meddelanden
+        for (var i = 0; i < MessageBoard.messages.length; ++i) {
+            MessageBoard.renderMessage(i);
+        }
+    },
+
+    renderMessage: function (messageID) {
+
+
+
+        // Meddelande text
+        var text = document.createElement("p");
+        text.innerHTML = MessageBoard.messages[messageID].getHTMLText();
+        dov.appendChild(text);
     }
 
 };
