@@ -5,7 +5,7 @@ var MessageBoard = {
     messages: [],
 
     init: function (e) {
-        
+
         //Testar message-objektet.
         //var mess = new Message("Testmeddelande", new Date());
         //alert(mess);
@@ -27,8 +27,18 @@ var MessageBoard = {
         //console.log(MessageBoard.messages[2].getText());
         //console.log(MessageBoard.messages[3].getText());
 
+    },
+
+    // Skapar ett meddelande
+    create: function createMessage() {
+
+        var mess = new Message(document.getElementById("textBox").value, new Date());
+
+        MessageBoard.messages.push(mess); // Lägger till det nya message-objeket i en array med meddelanden.
+
+        document.getElementById("textBox").value = ""; // Tar bort den skrivna texten från textfältet.
 
     }
-};
 
+};
 window.onload = MessageBoard.init;

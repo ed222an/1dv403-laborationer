@@ -9,11 +9,11 @@
 <body>
     <div id="container" class="centerAlign">
         <div id="header">Labby mezzage</div>
-        <div id="previousMessages">Gamla meddelanden hamnar här</div>
+        <div id="previousMessages">Posted messages show up here</div>
         <div id="textBoxContainer">
-            <textarea id="textBox"></textarea>
+            <textarea id="textBox" placeholder="Type your message here."></textarea>
             <div id="buttonContainer">
-                <input id="button" type="submit" value="skriv" />
+                <input id="button" onclick="MessageBoard.create();" type="submit" value="send" />
             </div>
         </div>
     </div>
