@@ -83,7 +83,11 @@ var MessageBoard = {
         imgClose.className = "resizeImage";
         imgClose.alt = "Close";
         imgClose.onclick = function () {
-            MessageBoard.removeMessage(messageID);
+
+            var doIt = confirm("Do you really want to delete this message?");
+            if (doIt) {
+                MessageBoard.removeMessage(messageID);
+            }
         }
 
         // Skapar en tid-knapp
