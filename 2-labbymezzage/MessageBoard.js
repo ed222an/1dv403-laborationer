@@ -38,10 +38,10 @@ var MessageBoard = {
 
         //MessageBoard.messages.push(test1, test2, test3, test4);
 
-        //console.log(MessageBoard.messages[0].getText());
-        //console.log(MessageBoard.messages[1].getText());
-        //console.log(MessageBoard.messages[2].getText());
-        //console.log(MessageBoard.messages[3].getText());
+        //console.log(MessageBoard.messages[0].getDate());
+        //console.log(MessageBoard.messages[1].getDate());
+        //console.log(MessageBoard.messages[2].getDate());
+        //console.log(MessageBoard.messages[3].getDate());
 
     },
 
@@ -76,17 +76,27 @@ var MessageBoard = {
         var text = document.createElement("p");
         var lineBreak = document.createElement("br");
         var imgClose = document.createElement("img");
+        var imgTime = document.createElement("img");
 
         // Skapar en radera meddelande-knapp.
         imgClose.src = "http://findicons.com/files/icons/573/must_have/48/remove.png";
-        imgClose.className = "remove";
+        imgClose.className = "resizeImage";
         imgClose.alt = "Close";
         imgClose.onclick = function () {
             MessageBoard.removeMessage(messageID);
         }
 
+        // Skapar en tid-knapp
+        imgTime.src = "http://img.informer.com/icons/png/48/52/52152.png";
+        imgTime.className = "resizeImage";
+        imgTime.alt = "Creation time";
+        imgTime.onclick = function () {
+            MessageBoard.showMessageTime(messageID);
+        }
+
         // Lägger till de nya elementen i den nya divtaggen.
         text.appendChild(imgClose);
+        text.appendChild(imgTime);
         text.appendChild(document.createTextNode(MessageBoard.messages[messageID].getText()));
         text.appendChild(lineBreak);
         text.appendChild(document.createTextNode(MessageBoard.messages[messageID].getDateText()));
@@ -124,6 +134,15 @@ var MessageBoard = {
 
         // Visar de kvarvarande meddelandena.
         MessageBoard.renderMessages();
+    },
+
+    showMessageTime: function (messageID) {
+
+        var time = MessageBoard.messages[messageID].getDate();
+
+        // Visar tiden då meddelandet skapades i en alertruta.
+        alert("This message was created " + time);
+
     }
 };
 
