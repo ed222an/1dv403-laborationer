@@ -49,7 +49,7 @@
     text-align:center;
 }
 
-/* JavaScript classes*/
+/* JavaScript */
 .previousMessages p{
     margin-top:20px;
     margin-left:200px;
@@ -66,4 +66,10 @@
     margin-right:200px;
     text-align:right;
     font-size:14px;
+}
+
+.remove {
+    height: 3%;
+    width: 3%;
+    float:right;
 }

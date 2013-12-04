@@ -1,6 +1,9 @@
 "use strict";
 var newDiv = document.getElementById("messageCounter");
 newDiv.className = "messageCount";
+var count = 0;
+
+document.getElementById("messageCounter").innerHTML = "Number of messages: 0";
 
 var MessageBoard = {
 
@@ -72,7 +75,18 @@ var MessageBoard = {
 
         var text = document.createElement("p");
         var lineBreak = document.createElement("br");
+        var imgClose = document.createElement("img");
 
+        // Skapar en radera meddelande-knapp.
+        imgClose.src = "http://findicons.com/files/icons/573/must_have/48/remove.png";
+        imgClose.className = "remove";
+        imgClose.alt = "Close";
+        imgClose.onclick = function () {
+            MessageBoard.removeMessage(messageID);
+        }
+
+        // Lägger till de nya elementen i den nya divtaggen.
+        text.appendChild(imgClose);
         text.appendChild(document.createTextNode(MessageBoard.messages[messageID].getText()));
         text.appendChild(lineBreak);
         text.appendChild(document.createTextNode(MessageBoard.messages[messageID].getDateText()));
@@ -94,8 +108,22 @@ var MessageBoard = {
     messageCounter: function () {
 
         // Räknar antal meddelanden.
-        var count = MessageBoard.messages.length;
+        ++count;
         document.getElementById("messageCounter").innerHTML = "Number of messages: " + count;
+    },
+
+    removeMessage: function (messageID) {
+
+        // Raderar det valda meddelandet.
+        MessageBoard.messages.splice(messageID, 1);
+
+        // Ändrar meddelanderäknaren.
+        --count;
+        --count;
+        MessageBoard.messageCounter();
+
+        // Visar de kvarvarande meddelandena.
+        MessageBoard.renderMessages();
     }
 };
 
