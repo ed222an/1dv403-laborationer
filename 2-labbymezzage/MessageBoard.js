@@ -1,4 +1,6 @@
 "use strict";
+var newDiv = document.getElementById("messageCounter");
+newDiv.className = "messageCount";
 
 var MessageBoard = {
 
@@ -6,11 +8,16 @@ var MessageBoard = {
 
     init: function (e) {
 
-        // Kopplar händelser på webbplatsen till javascript.
-        var link = document.getElementById("button");
+        // Kopplar knapp-händelser på webbplatsen till javascript.
+        var button = document.getElementById("button");
 
-        link.addEventListener("click", MessageBoard.create, false);
-        link.addEventListener("click", MessageBoard.renderMessages, false);
+        button.addEventListener("click", MessageBoard.create, false);
+        button.addEventListener("click", MessageBoard.messageCounter, false);
+        button.addEventListener("click", MessageBoard.renderMessages, false);
+
+        var textArea = document.getElementById("textBox");
+
+        textArea.addEventListener("keydown", MessageBoard.searchKey, false);
 
         //Testar message-objektet.
         //var mess = new Message("Testmeddelande", new Date());
@@ -42,16 +49,14 @@ var MessageBoard = {
 
         MessageBoard.messages.push(mess); // Lägger till det nya message-objeket i en array med meddelanden.
 
-        for (var i = 0; i < MessageBoard.messages.length; ++i) {
-            console.log(MessageBoard.messages[i].getText());
-        }
+        document.getElementById("textBox").value = "";
 
     },
 
     renderMessages: function () {
 
         // Tar bort alla meddelanden.
-        document.getElementById("textBox").value = ""; // Tar bort den skrivna texten från textfältet.
+        document.getElementById("previousMessages").innerHTML = ""; // Tar bort den skrivna texten från textfältet.
 
         // Visar alla meddelanden.
         for (var i = 0; i < MessageBoard.messages.length; ++i) {
@@ -66,8 +71,31 @@ var MessageBoard = {
         newDiv.className = "previousMessages";
 
         var text = document.createElement("p");
+        var lineBreak = document.createElement("br");
+
         text.appendChild(document.createTextNode(MessageBoard.messages[messageID].getText()));
+        text.appendChild(lineBreak);
+        text.appendChild(document.createTextNode(MessageBoard.messages[messageID].getDateText()));
+
         newDiv.appendChild(text);
+    },
+
+    searchKey: function (e) {
+
+        // Kollar ifall enter + shift är nedtryckt, isåfall byter man rad.
+        if (event.keyCode == 13 && !event.shiftKey) {
+            document.getElementById('button').click();
+            e.preventDefault(); // Trycker man bara enter så skickas meddelandet men det blir ingen ny rad.
+            return false;
+        }
+
+    },
+
+    messageCounter: function () {
+
+        // Räknar antal meddelanden.
+        var count = MessageBoard.messages.length;
+        document.getElementById("messageCounter").innerHTML = "Number of messages: " + count;
     }
 };
 

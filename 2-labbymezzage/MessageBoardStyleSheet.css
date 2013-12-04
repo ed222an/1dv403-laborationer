@@ -7,6 +7,7 @@
     background-color:black;
     color:white;
     font-family:Aharoni;
+    border-radius:25px;
 }
 
 #header {
@@ -26,6 +27,7 @@
     margin-right:200px;
     padding:20px;
     background-color:white;
+    border-radius:25px;
 }
 #textBox {
     width:400px; height:100px;
@@ -47,10 +49,21 @@
     text-align:center;
 }
 
+/* JavaScript classes*/
 .previousMessages p{
     margin-top:20px;
     margin-left:200px;
     margin-right:200px;
     padding:20px;
     border: 2px groove red;
+    border-radius:25px;
+    text-align:left;
+}
+
+.messageCount{
+    margin:10px;
+    margin-left:200px;
+    margin-right:200px;
+    text-align:right;
+    font-size:14px;
 }

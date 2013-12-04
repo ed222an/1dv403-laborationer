@@ -29,4 +29,11 @@ Message.prototype.getHTMLText = function () {
 
 Message.prototype.getDateText = function () {
 
+    var totalSec = new Date().getTime() / 1000;
+    var hours = parseInt(totalSec / 3600) % 24;
+    hours += 1;
+    var minutes = parseInt(totalSec / 60) % 60;
+    var seconds = parseInt(totalSec % 60, 10);
+    
+    return (hours < 10 ? "0" + hours : hours) + "-" + (minutes < 10 ? "0" + minutes : minutes) + "-" + (seconds < 10 ? "0" + seconds : seconds);
 }
