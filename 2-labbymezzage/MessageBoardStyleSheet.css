@@ -46,3 +46,11 @@
 .centerAlign {
     text-align:center;
 }
+
+.previousMessages p{
+    margin-top:20px;
+    margin-left:200px;
+    margin-right:200px;
+    padding:20px;
+    border: 2px groove red;
+}

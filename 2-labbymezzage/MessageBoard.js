@@ -6,6 +6,12 @@ var MessageBoard = {
 
     init: function (e) {
 
+        // Kopplar händelser på webbplatsen till javascript.
+        var link = document.getElementById("button");
+
+        link.addEventListener("click", MessageBoard.create, false);
+        link.addEventListener("click", MessageBoard.renderMessages, false);
+
         //Testar message-objektet.
         //var mess = new Message("Testmeddelande", new Date());
         //alert(mess);
@@ -29,23 +35,25 @@ var MessageBoard = {
 
     },
 
-    // Skapar ett meddelande
-    create: function createMessage() {
+    // Skapar ett meddelande.
+    create: function () {
 
         var mess = new Message(document.getElementById("textBox").value, new Date());
 
         MessageBoard.messages.push(mess); // Lägger till det nya message-objeket i en array med meddelanden.
 
-        //document.getElementById("textBox").value = ""; // Tar bort den skrivna texten från textfältet.
+        for (var i = 0; i < MessageBoard.messages.length; ++i) {
+            console.log(MessageBoard.messages[i].getText());
+        }
 
     },
 
     renderMessages: function () {
 
-        // Tar bort alla meddelanden
-        document.getElementById("textBox").innerHTML = "";
+        // Tar bort alla meddelanden.
+        document.getElementById("textBox").value = ""; // Tar bort den skrivna texten från textfältet.
 
-        // Visar alla meddelanden
+        // Visar alla meddelanden.
         for (var i = 0; i < MessageBoard.messages.length; ++i) {
             MessageBoard.renderMessage(i);
         }
@@ -53,13 +61,14 @@ var MessageBoard = {
 
     renderMessage: function (messageID) {
 
+        //Skapar en ny div-tag & lägger in meddelandetexten i en p-tag på div-taggen.
+        var newDiv = document.getElementById("previousMessages");
+        newDiv.className = "previousMessages";
 
-
-        // Meddelande text
         var text = document.createElement("p");
-        text.innerHTML = MessageBoard.messages[messageID].getHTMLText();
-        dov.appendChild(text);
+        text.appendChild(document.createTextNode(MessageBoard.messages[messageID].getText()));
+        newDiv.appendChild(text);
     }
-
 };
+
 window.onload = MessageBoard.init;
