@@ -1,63 +1,75 @@
 "use strict"
 
-var RandomGenerator = {
-	
-	/*
-		Denna metod tar antalet rader och columner som inparameter.
-		
-		Metoden returnerar en array innehållandes utslumpade tal mellan 1 och (rows*cols)/2. Varje tal representeras två
-		gånger och motsvarar således en spelbricka. 
-		
-		I en 4*4 matris kan Arrayen t.ex. se ut så här:
-		[1,2,6,8,6,2,5,3,1,3,7,5,8,4,4,7]
-		
-		I en 2*4 matris kan Arrayen t.ex. se ut så här:				
-		[3,4,4,1,2,1,2,3]
-	*/
-	
-	getPictureArray: function(rows, cols)
-	{
-		var numberOfImages = rows*cols;
-		var maxImageNumber = numberOfImages/2;
-	
-	   	var imgPlace = [];
-	
-	   //Utplacering av bilder i Array
-	   for(var i=0; i<numberOfImages; i++)
-		  imgPlace[i] = 0;
-	
-		for(var currentImageNumber=1; currentImageNumber<=maxImageNumber; currentImageNumber++)
-		{		
-			var imageOneOK = false;
-			var imageTwoOK = false;
-			
-			do
-			{
-				if(imageOneOK == false)
-				{
-					var randomOne = Math.floor( (Math.random() * (rows*cols-0) + 0) );				
-					
-					if( imgPlace[randomOne] == 0 )
-					{
-						imgPlace[randomOne] = currentImageNumber;
-						imageOneOK = true;
-					}
-				}
-				
-				if(imageTwoOK == false)
-				{
-					var randomTwo = Math.floor( (Math.random() * (rows*cols-0) + 0) );				
-								
-					if( imgPlace[randomTwo] == 0 )
-					{
-						imgPlace[randomTwo] = currentImageNumber;
-						imageTwoOK = true;
-					}
-				}			
-			}
-			while(imageOneOK == false || imageTwoOK == false);		
-		}
-		
-		return imgPlace;
-	}
-}
+var memoryArray = [];
+
+// Statiskt memory-objekt.
+var Memory = {
+
+    init: function (e) {
+
+        // Kallar på slumpfilen och skickar med storleken 4x4 på spelplanen.
+        Memory.saveArray(RandomGenerator.getPictureArray(4, 4));
+
+        Memory.renderArray(memoryArray);
+
+    },
+
+    saveArray: function (randomGeneratedArray) {
+        
+        memoryArray = randomGeneratedArray;
+
+    },
+
+    renderArray: function (myArray) {
+
+        // Skapar div-taggar och placerar dem i html-dokumentet.
+
+        var newDiv = document.createElement("div");
+        newDiv.id = "block";
+        newDiv.className = "block";
+        document.getElementsByTagName("body")[0].appendChild(newDiv);
+
+        // Skapar en inre div-tag
+        var innerDiv = document.createElement("div");
+        innerDiv.className = "block-2";
+
+        // Lägger till den inre divtaggen i den yttre.
+        newDiv.appendChild(innerDiv);
+
+        // Skapar en tabell och placerar den i HTML-dokumentet
+        var table = document.createElement("table");
+        table.border = 1;
+
+        // Genererar rader och celler, byt siffra på i < 4 för att enkelt ändra storlek på spelbrädet.
+        for (var i = 0; i < 4; ++i) {
+            var row = document.createElement("tr");
+            table.appendChild(row);
+
+            // Lägger till respektive siffra i arrayen i en tabellcell.
+            for (var j = 0; j < myArray.length; ++j) {
+                var arrayNumber = document.createTextNode(myArray[j]);
+
+                // Skapar en cell med respektive siffra.
+                for (var k = 0; k < 4; ++k) {
+                    var cell = document.createElement("td");
+                    row.appendChild(cell);
+                    cell.appendChild(arrayNumber);
+                };
+            };
+        };
+
+        innerDiv.appendChild(table);
+
+
+
+
+    }
+
+};
+window.onload = Memory.init;
+
+//console.log("Test");
+
+//for (var i = 0; i < memoryArray.length; ++i) {
+//    console.log(memoryArray[i]);
+//}
