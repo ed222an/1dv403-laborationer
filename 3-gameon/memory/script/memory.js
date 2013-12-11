@@ -1,13 +1,5 @@
 "use strict"
 
-var newDiv = null;
-var innerDiv = null;
-var table = null;
-var row = null;
-var cell = null;
-var aTag = null;
-var image = null;
-
 // Används för att sätta id:n på tabellcellernas a-taggar.
 var boxCounter = 0;
 
@@ -25,37 +17,37 @@ var Memory = {
         Memory.renderArray(Memory.memoryArray);
     },
 
-    makeClickListener: function (elm) {
-        return function () {
-            Memory.flipTile(elm.className);
-        };
-    },
-
     renderArray: function (myArray) {
 
         // Skapar div-taggar och placerar dem i HTML-dokumentet.
-        newDiv = document.createElement("div");
+        var newDiv = document.createElement("div");
         document.getElementById("memorygame").appendChild(newDiv);
 
         // Skapar en tabell och placerar den i HTML-dokumentet
-        table = document.createElement("table");
+        var table = document.createElement("table");
         table.border = 1;
 
         // Genererar rader och celler, byt siffra på i < 4 för att enkelt ändra storlek på spelbrädet.
         for (var i = 0; i < 4; ++i) {
-            row = document.createElement("tr");
+            var row = document.createElement("tr");
             table.appendChild(row);
 
             // Skapar en cell med respektive siffra.
             for (var j = 0; j < 4; ++j) {
-                cell = document.createElement("td");
+                var cell = document.createElement("td");
 
                 // Översätter arrayens siffror till bilder & lägger in dem i a-taggar.
-                image = document.createElement("img");
+                var image = document.createElement("img");
                 image.className = myArray[i * 4 + j];
                 image.src = "https://github.com/1dv403/1dv403-laborationer/blob/master/3-gameon/memory/pics/0.png?raw=true";
-                aTag = document.createElement("a");
-                aTag.onclick = Memory.makeClickListener(image);
+                image.alt = "?";
+                var aTag = document.createElement("a");
+                aTag.href = "#";
+                aTag.onclick = function (image) {
+                    return function () {
+                        Memory.flipTile(image);
+                    };
+                }(image);
 
 
                 // Lägger till respektive bild i en tabellcell.
@@ -69,32 +61,35 @@ var Memory = {
 
     },
 
-    flipTile: function (imageClass) {
-        console.log(imageClass);
+    flipTile: function (image) {
         
+        var flipLock = 0;
+
+        ++flipLock;
+
         // Vänder brickorna.
-        if (imageClass == 1) {
+        if (image.className == 1) {
             image.src = "https://github.com/1dv403/1dv403-laborationer/blob/master/3-gameon/memory/pics/1.png?raw=true";
         };
-        if (imageClass == 2) {
+        if (image.className == 2) {
             image.src = "https://github.com/1dv403/1dv403-laborationer/blob/master/3-gameon/memory/pics/2.png?raw=true";
         };
-        if (imageClass == 3) {
+        if (image.className == 3) {
             image.src = "https://github.com/1dv403/1dv403-laborationer/blob/master/3-gameon/memory/pics/3.png?raw=true";
         };
-        if (imageClass == 4) {
+        if (image.className == 4) {
             image.src = "https://github.com/1dv403/1dv403-laborationer/blob/master/3-gameon/memory/pics/4.png?raw=true";
         };
-        if (imageClass == 5) {
+        if (image.className == 5) {
             image.src = "https://github.com/1dv403/1dv403-laborationer/blob/master/3-gameon/memory/pics/5.png?raw=true";
         };
-        if (imageClass == 6) {
+        if (image.className == 6) {
             image.src = "https://github.com/1dv403/1dv403-laborationer/blob/master/3-gameon/memory/pics/6.png?raw=true";
         };
-        if (imageClass == 7) {
+        if (image.className == 7) {
             image.src = "https://github.com/1dv403/1dv403-laborationer/blob/master/3-gameon/memory/pics/7.png?raw=true";
         };
-        if (imageClass == 8) {
+        if (image.className == 8) {
             image.src = "https://github.com/1dv403/1dv403-laborationer/blob/master/3-gameon/memory/pics/8.png?raw=true";
         };
 
