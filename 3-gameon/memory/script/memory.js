@@ -1,7 +1,14 @@
 "use strict"
 
-// Används för att sätta id:n på tabellcellernas a-taggar.
-var boxCounter = 0;
+// Används för att kontrollera hur många brickor som är vända.
+var flipLock = 0;
+
+// Används som timer för att räknar upp 1 sekund sen vänder tillbaks brickorna.
+var timeoutID;
+
+// Räknare som håller reda på hur många par som hittats samt hur många försök som gjorts.
+var pairCount = 0;
+var tryCount = 0;
 
 // Statiskt memory-objekt.
 var Memory = {
@@ -39,15 +46,31 @@ var Memory = {
                 // Översätter arrayens siffror till bilder & lägger in dem i a-taggar.
                 var image = document.createElement("img");
                 image.className = myArray[i * 4 + j];
-                image.src = "https://github.com/1dv403/1dv403-laborationer/blob/master/3-gameon/memory/pics/0.png?raw=true";
+                image.src = "../pics/0.png";
                 image.alt = "?";
                 var aTag = document.createElement("a");
                 aTag.href = "#";
-                aTag.onclick = function (image) {
+
+                // Stänger av onclick-eventet så endast 2 brickor kan vara uppvända samtidigt.
+                if (flipLock >= 2) {
+                    aTag.onclick = null;
+                    Memory.timer();
+                };
+                aTag.onclick = function (image, aTag) {
                     return function () {
-                        Memory.flipTile(image);
+
+                        // Stänger av onclick-eventet så endast 2 brickor kan vara uppvända samtidigt.
+                        if (flipLock >= 2) {
+                            aTag.onclick = null;
+                            Memory.timer();
+                        }
+                        else {
+                            // Kallar på metoden som vänder bilderna.
+                            Memory.flipTile(image, aTag);
+                            ++flipLock;
+                        };
                     };
-                }(image);
+                }(image, aTag);
 
 
                 // Lägger till respektive bild i en tabellcell.
@@ -61,37 +84,56 @@ var Memory = {
 
     },
 
-    flipTile: function (image) {
-        
-        var flipLock = 0;
+    timer: function () {
 
-        ++flipLock;
+        console.log("Test");
+        timeoutID = setTimeout(function () {
+            var reset = document.getElementsByTagName("img");
+
+            for (var i = 0; i < reset.length; i++) {
+                reset[i].src = "../pics/0.png";
+            };
+            flipLock = 0;
+        }
+        , 1000);
+    },
+
+    flipTile: function (image, aTag) {
 
         // Vänder brickorna.
+        if (image.className == 0) {
+            image.src = "../pics/0.png";
+        };
         if (image.className == 1) {
-            image.src = "https://github.com/1dv403/1dv403-laborationer/blob/master/3-gameon/memory/pics/1.png?raw=true";
+            image.src = "../pics/1.png";
         };
         if (image.className == 2) {
-            image.src = "https://github.com/1dv403/1dv403-laborationer/blob/master/3-gameon/memory/pics/2.png?raw=true";
+            image.src = "../pics/2.png";
         };
         if (image.className == 3) {
-            image.src = "https://github.com/1dv403/1dv403-laborationer/blob/master/3-gameon/memory/pics/3.png?raw=true";
+            image.src = "../pics/3.png";
         };
         if (image.className == 4) {
-            image.src = "https://github.com/1dv403/1dv403-laborationer/blob/master/3-gameon/memory/pics/4.png?raw=true";
+            image.src = "../pics/4.png";
         };
         if (image.className == 5) {
-            image.src = "https://github.com/1dv403/1dv403-laborationer/blob/master/3-gameon/memory/pics/5.png?raw=true";
+            image.src = "../pics/5.png";
         };
         if (image.className == 6) {
-            image.src = "https://github.com/1dv403/1dv403-laborationer/blob/master/3-gameon/memory/pics/6.png?raw=true";
+            image.src = "../pics/6.png";
         };
         if (image.className == 7) {
-            image.src = "https://github.com/1dv403/1dv403-laborationer/blob/master/3-gameon/memory/pics/7.png?raw=true";
+            image.src = "../pics/7.png";
         };
         if (image.className == 8) {
-            image.src = "https://github.com/1dv403/1dv403-laborationer/blob/master/3-gameon/memory/pics/8.png?raw=true";
+            image.src = "../pics/8.png";
         };
+
+        console.log(image);
+
+        //if (pairCount == 0) {
+        //    alert("CONGRATULATIONS! YOU WON AFTER "+tryCount+" TRIES!");
+        //};
 
     }
 
@@ -127,7 +169,7 @@ window.onload = Memory.init;
 //        // Calls a separate js-file which generates a random numbers.
 //        Memory.memoryArray = RandomGenerator.getPictureArray(4, 4);
 
-//        // Calls the rendering method
+//        // Calls the rendering method.
 //        Memory.renderArray(Memory.memoryArray);
 //    },
 
