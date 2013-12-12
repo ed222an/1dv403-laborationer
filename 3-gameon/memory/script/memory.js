@@ -1,24 +1,22 @@
 "use strict"
 
-// Används för att kontrollera hur många brickor som är vända.
-var flipLock = 0;
-
-// Används som timer för att räknar upp 1 sekund sen vänder tillbaks brickorna.
-var timeoutID;
-
 // Räknare som håller reda på hur många par som hittats samt hur många försök som gjorts.
 var pairCount = 0;
 var tryCount = 0;
+var clickCount = 0;
 
 // Statiskt memory-objekt.
 var Memory = {
 
     memoryArray: [],
+    imageArray: [],
+    rows: 4,
+    cols: 4,
 
     init: function (e) {
 
         // Kallar på random.js och skickar med storleken 4x4 på spelplanen.
-        Memory.memoryArray = RandomGenerator.getPictureArray(4, 4);
+        Memory.memoryArray = RandomGenerator.getPictureArray(Memory.rows, Memory.cols);
 
         // Kallar på renderingsmetoden för spelet.
         Memory.renderArray(Memory.memoryArray);
@@ -35,216 +33,85 @@ var Memory = {
         table.border = 1;
 
         // Genererar rader och celler, byt siffra på i < 4 för att enkelt ändra storlek på spelbrädet.
-        for (var i = 0; i < 4; ++i) {
+        for (var i = 0; i < Memory.rows; ++i) {
             var row = document.createElement("tr");
             table.appendChild(row);
 
             // Skapar en cell med respektive siffra.
-            for (var j = 0; j < 4; ++j) {
+            for (var j = 0; j < Memory.cols; ++j) {
                 var cell = document.createElement("td");
 
                 // Översätter arrayens siffror till bilder & lägger in dem i a-taggar.
                 var image = document.createElement("img");
-                image.className = myArray[i * 4 + j];
+                image.className = myArray[i * 4 + j]; // Behöver ändras ifall man ska kunna ha andra värden än fyra på rows och cols.
                 image.src = "../pics/0.png";
                 image.alt = "?";
                 var aTag = document.createElement("a");
                 aTag.href = "#";
-
-                // Stänger av onclick-eventet så endast 2 brickor kan vara uppvända samtidigt.
-                if (flipLock >= 2) {
-                    aTag.onclick = null;
-                    Memory.timer();
-                };
-                aTag.onclick = function (image, aTag) {
-                    return function () {
-
-                        // Stänger av onclick-eventet så endast 2 brickor kan vara uppvända samtidigt.
-                        if (flipLock >= 2) {
-                            aTag.onclick = null;
-                            Memory.timer();
-                        }
-                        else {
-                            // Kallar på metoden som vänder bilderna.
-                            Memory.flipTile(image, aTag);
-                            ++flipLock;
-                        };
-                    };
-                }(image, aTag);
-
 
                 // Lägger till respektive bild i en tabellcell.
                 aTag.appendChild(document.createTextNode(myArray[i * 4 + j]));
                 aTag.appendChild(image);
                 cell.appendChild(aTag);
                 row.appendChild(cell);
+
+                // Skickar med bilden till flipfunktionen.
+                Memory.flipTile(image, aTag);
             };
         };
         newDiv.appendChild(table);
 
     },
 
-    timer: function () {
-
-        console.log("Test");
-        timeoutID = setTimeout(function () {
-            var reset = document.getElementsByTagName("img");
-
-            for (var i = 0; i < reset.length; i++) {
-                reset[i].src = "../pics/0.png";
-            };
-            flipLock = 0;
-        }
-        , 1000);
-    },
-
     flipTile: function (image, aTag) {
 
-        // Vänder brickorna.
-        if (image.className == 0) {
-            image.src = "../pics/0.png";
-        };
-        if (image.className == 1) {
-            image.src = "../pics/1.png";
-        };
-        if (image.className == 2) {
-            image.src = "../pics/2.png";
-        };
-        if (image.className == 3) {
-            image.src = "../pics/3.png";
-        };
-        if (image.className == 4) {
-            image.src = "../pics/4.png";
-        };
-        if (image.className == 5) {
-            image.src = "../pics/5.png";
-        };
-        if (image.className == 6) {
-            image.src = "../pics/6.png";
-        };
-        if (image.className == 7) {
-            image.src = "../pics/7.png";
-        };
-        if (image.className == 8) {
-            image.src = "../pics/8.png";
-        };
+        aTag.onclick = function (image, aTag) {
+            return function () {
 
-        console.log(image);
+                ++clickCount;
 
-        //if (pairCount == 0) {
-        //    alert("CONGRATULATIONS! YOU WON AFTER "+tryCount+" TRIES!");
-        //};
+                // Vänder bilden.
+                if (clickCount < 3) {
+
+                    if (Memory.imageArray.length <= 2) {
+                        image.src = "../pics/" + image.className + ".png";
+                    };
+                }
+                
+
+                // Lägger till aktuell bild till en array.
+                Memory.imageArray.push(image);
+
+                if (Memory.imageArray.length === 2) {
+                    ++tryCount;
+
+                    // Jämför de två bilderna i arrayen med varandra.
+                    if (Memory.imageArray[0].src == Memory.imageArray[1].src) {
+
+                        // Är de lika läggs 1 till på parräknaren & arrayen nollas. Är parräknaren = 8 skrivs en wintext ut.
+                        ++pairCount;
+                        clickCount = 0;
+                        Memory.imageArray = [];
+                        if (pairCount == 8) {
+                            var winText = document.getElementById("winner");
+                            winText.innerHTML = "CONGRATULATIONS! YOU WON AFTER " + tryCount + " TRIES! (reload page to play again)"
+                        };
+                    }
+                    else {
+                        // Är bilderna inte lika startas en timer och bilderna vänds ner igen.
+                        setTimeout(function () {
+
+                            for (var i = 0; i < Memory.imageArray.length; ++i) {
+                                Memory.imageArray[i].src = "../pics/0.png";
+                            };
+                            Memory.imageArray = [];
+                            clickCount = 0;
+                        }, 1000);
+                    };
+                };
+            };
+        }(image, aTag);
 
     }
-
 };
 window.onload = Memory.init;
-
-//console.log("Test");
-
-//for (var i = 0; i < memoryArray.length; ++i) {
-//    console.log(memoryArray[i]);
-//}
-
-//"use strict"
-
-//var newDiv = null;
-//var innerDiv = null;
-//var table = null;
-//var row = null;
-//var cell = null;
-//var aTag = null;
-//var image = null;
-
-//// Use this to put class names on the images.
-//var boxCounter = 0;
-
-//// Static memory-object.
-//var Memory = {
-
-//    memoryArray: [],
-
-//    init: function (e) {
-
-//        // Calls a separate js-file which generates a random numbers.
-//        Memory.memoryArray = RandomGenerator.getPictureArray(4, 4);
-
-//        // Calls the rendering method.
-//        Memory.renderArray(Memory.memoryArray);
-//    },
-
-//    renderArray: function (myArray) {
-
-//        // Creates and places div-tags in the HTML-document.
-//        newDiv = document.createElement("div");
-//        document.getElementsByTagName("body")[0].appendChild(newDiv);
-//        innerDiv = document.createElement("div");
-//        newDiv.appendChild(innerDiv);
-
-//        // Creates a table and places it in the HTML-document.
-//        table = document.createElement("table");
-//        table.border = 1;
-
-//        // Generates rows and cells, swap the 4's to change the size of the gameboard.
-//        for (var i = 0; i < 4; ++i) {
-//            row = document.createElement("tr");
-//            table.appendChild(row);
-
-//            // Creates a cell, each with its own respective random number.
-//            for (var j = 0; j < 4; ++j) {
-//                cell = document.createElement("td");
-
-//                // Adds a "Question-mark"-picture to the cell and places them in a-tags.
-//                image = document.createElement("img");
-//                image.className = myArray[i * 4 + j];
-//                image.src = "https://github.com/1dv403/1dv403-laborationer/blob/master/3-gameon/memory/pics/0.png?raw=true";
-//                aTag = document.createElement("a");
-//                aTag.onclick = function () {
-
-//                    Memory.flipTile(image.className);
-//                };
-
-//                // Places the pictures in the document, along with its random number for easier testing purposes.
-//                aTag.appendChild(document.createTextNode(myArray[i * 4 + j]));
-//                aTag.appendChild(image);
-//                cell.appendChild(aTag);
-//                row.appendChild(cell);
-//            };
-//        };
-//        innerDiv.appendChild(table);
-
-//    },
-
-//    flipTile: function (imageClass) {
-//        console.log(imageClass);
-
-//        // This should flip the tiles if the number matches the class name.
-//        if (imageClass == 1) {
-//            image.src = "https://github.com/1dv403/1dv403-laborationer/blob/master/3-gameon/memory/pics/1.png?raw=true";
-//        };
-//        if (imageClass == 2) {
-//            image.src = "https://github.com/1dv403/1dv403-laborationer/blob/master/3-gameon/memory/pics/2.png?raw=true";
-//        };
-//        if (imageClass == 3) {
-//            image.src = "https://github.com/1dv403/1dv403-laborationer/blob/master/3-gameon/memory/pics/3.png?raw=true";
-//        };
-//        if (imageClass == 4) {
-//            image.src = "https://github.com/1dv403/1dv403-laborationer/blob/master/3-gameon/memory/pics/4.png?raw=true";
-//        };
-//        if (imageClass == 5) {
-//            image.src = "https://github.com/1dv403/1dv403-laborationer/blob/master/3-gameon/memory/pics/5.png?raw=true";
-//        };
-//        if (imageClass == 6) {
-//            image.src = "https://github.com/1dv403/1dv403-laborationer/blob/master/3-gameon/memory/pics/6.png?raw=true";
-//        };
-//        if (imageClass == 7) {
-//            image.src = "https://github.com/1dv403/1dv403-laborationer/blob/master/3-gameon/memory/pics/7.png?raw=true";
-//        };
-//        if (imageClass == 8) {
-//            image.src = "https://github.com/1dv403/1dv403-laborationer/blob/master/3-gameon/memory/pics/8.png?raw=true";
-//        };
-
-//    }
-
-//};
-//window.onload = Memory.init;
