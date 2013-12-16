@@ -9,10 +9,10 @@
 <body>
     <div id="container" class="centerAlign">
         <h1>Validering</h1>
-        <form id="form" name="input" action="http://voyager.lnu.se/tekinet/kurser/dtt/wp_webbteknik/process_form.php" method="post">
-            First name: <input type="text" name="Firstname"/>
-            Last name: <input type="text" name="Lastname"/>
-            Postal code: <input type="text" name="Postalcode"/>
+        <form id="form" name="myForm" action="http://voyager.lnu.se/tekinet/kurser/dtt/wp_webbteknik/process_form.php" method="post">
+            First name: <input id="firstName" type="text" name="Firstname"/>
+            Last name: <input id="lastName" type="text" name="Lastname"/>
+            Postal code: <input id="postalCode" type="text" name="Postalcode"/>
             Price range: <select name="Pricerange">
                             <option>Low</option>
                             <option>Medium</option>
@@ -21,6 +21,6 @@
             <input id="button" type="submit" value="Submit" />
         </form>
     </div>
-    <script src="MessageBoard.js"></script>
+    <script src="validator.js"></script>
 </body>
 </html>
