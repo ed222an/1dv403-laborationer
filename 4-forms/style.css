@@ -1,0 +1,29 @@
+﻿/*General attributes*/
+
+#container {
+    margin:auto;
+    width:1000px; height:auto;
+    padding-bottom:20px;
+    background-color:#A3FFFF;
+    color:deepskyblue;
+    font-family:Aharoni;
+    border-radius:25px;
+    text-align:center;
+}
+
+h1 {
+    padding-top:20px;
+}
+
+form {
+    display:inline-block;
+}
+
+input {
+    padding:4px;
+    display: block;
+}
+
+#button {
+    font-weight:bold;
+}
