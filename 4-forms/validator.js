@@ -51,11 +51,10 @@ var Validator = {
         postalCode.onblur = function () {
 
             // Variabel för testning av strängen.
-            var pcValue = postalCode.value;
-            pcValue = pcValue.replace(/^\s+/, '').replace(/\s+$/, '');
+            var format = /^[SE]*[\s]*[0-9]{3}[\s\-]*[0-9]{2}$/;
 
             //Är strängen tom eller whitespace körs errorBox. Annars körs correctBox.
-            if (pcValue === '' || isNaN(pcValue) || pcValue.length != 5) {
+            if (format.test(postalCode.value) === false) {
                 Validator.errorBox(postalCode);
                 Validator.postalCode = false;
             }
@@ -68,15 +67,10 @@ var Validator = {
         eMail.onblur = function () {
 
             // Variabel för testning av strängen.
-            var checker = true;
-            var emValue = eMail.value;
-            emValue = emValue.replace(/^\s+/, '').replace(/\s+$/, '');
-
-            var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-            checker = re.test(emValue);
+            var check = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
             //Är strängen tom eller whitespace körs errorBox. Annars körs correctBox.
-            if (checker === false) {
+            if (check.test(eMail.value) === false) {
                 Validator.errorBox(eMail);
                 Validator.eMail = false;
             }
