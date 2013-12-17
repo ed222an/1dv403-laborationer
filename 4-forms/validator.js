@@ -51,14 +51,18 @@ var Validator = {
         postalCode.onblur = function () {
 
             // Variabel för testning av strängen.
+            var pcValue = postalCode.value;
             var format = /^[SE]*[\s]*[0-9]{3}[\s\-]*[0-9]{2}$/;
 
             //Är strängen tom eller whitespace körs errorBox. Annars körs correctBox.
-            if (format.test(postalCode.value) === false) {
+            if (format.test(pcValue) === false) {
                 Validator.errorBox(postalCode);
                 Validator.postalCode = false;
             }
             else {
+                console.log(pcValue);
+                pcValue = pcValue.replaceAll(/^[0-9]{5}$/); //                                                                  JOBBA ÄR NÄSTA GÅNG!!!!
+                console.log(pcValue);
                 Validator.correctBox(postalCode);
                 Validator.postalCode = true;
             };
