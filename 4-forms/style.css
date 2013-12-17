@@ -19,16 +19,53 @@ form {
     display:inline-block;
 }
 
+#first {
+    float:right;
+    margin-right:230px;
+    margin-top:23px;
+    margin-left:-390px;
+}
+
+#last {
+    float:right;
+    margin-right:233px;
+    margin-top:72px;
+    margin-left:-390px;
+}
+
+#code {
+    float:right;
+    margin-right:166px;
+    margin-top:121px;
+    margin-left:-390px;
+}
+
+#mail {
+    float:right;
+    margin-right:255px;
+    margin-top:170px;
+    margin-left:-390px;
+}
+
 input {
     padding:4px;
     display: block;
-    border: 2px solid;
     border-radius:25px;
+    outline:none;
+    transition: all 0.25s ease-in-out;
+    -webkit-transition: all 0.25s ease-in-out;
+    -moz-transition: all 0.25s ease-in-out;
 }
+
+input:focus {
+    box-shadow: 0 0 5px rgba(0, 0, 255, 1);
+    -webkit-box-shadow: 0 0 5px rgba(0, 0, 255, 1); 
+    -moz-box-shadow: 0 0 5px rgba(0, 0, 255, 1); 
+}
+
 
 #button {
     font-weight:bold;
-    border: 1px solid;
     border-radius:5px;
 }
 

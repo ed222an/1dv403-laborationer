@@ -10,12 +10,10 @@
     <div id="container" class="centerAlign">
         <h1>Validering</h1>
         <form id="form" name="myForm" action="http://voyager.lnu.se/tekinet/kurser/dtt/wp_webbteknik/process_form.php" method="post">
-            First name: <input id="firstName" type="text" name="Firstname"/>
-            <p id="pFirst"></p>
-            Last name: <input id="lastName" type="text" name="Lastname"/>
-            <p id="pLast"></p>
-            Postal code: <input id="postalCode" type="text" name="Postalcode"/>
-            <p id="pCode"></p>
+            First name:<input id="firstName" type="text" name="Firstname"/>
+            Last name:<input id="lastName" type="text" name="Lastname"/>
+            Postal code:<input id="postalCode" type="text" name="Postalcode"/>
+            E-mail:<input id="eMail" type="text" name="Email"/>
             Price range: <select name="Pricerange">
                             <option>Low</option>
                             <option>Medium</option>
@@ -23,6 +21,10 @@
                         </select>
             <input id="button" type="submit" value="Submit" />
         </form>
+        <div id="first"></div>
+        <div id="last"></div>
+        <div id="code"></div>
+        <div id="mail"></div>
     </div>
     <script src="validator.js"></script>
 </body>
