@@ -80,3 +80,8 @@ input:focus {
     color:green;
     border-color:green;
 }
+
+.button {
+    color:white;
+    background-color:lightseagreen;
+}

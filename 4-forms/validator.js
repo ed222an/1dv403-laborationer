@@ -2,10 +2,16 @@
 
 var Validator = {
 
-    firstName: false,
-    lastName: false,
-    postalCode: false,
-    eMail: false,
+    form: document.getElementById("form"),
+    check1: false,
+    check2: false,
+    check3: false,
+    check4: false,
+
+    firstName: null,
+    lastName: null,
+    postalCode: null,
+    eMail: null,
 
     init: function (e) {
 
@@ -13,6 +19,12 @@ var Validator = {
         var lastName = document.getElementById("lastName");
         var postalCode = document.getElementById("postalCode");
         var eMail = document.getElementById("eMail");
+        var button = document.getElementById("button");
+
+        // Gör knappen oklickbar.
+        button.onclick = function () {
+            return false;
+        };
 
         firstName.onblur = function () {
 
@@ -21,13 +33,15 @@ var Validator = {
             fnValue = fnValue.replace(/^\s+/, '').replace(/\s+$/, '');
 
             //Är strängen tom eller whitespace körs errorBox. Annars körs correctBox.
-            if (fnValue === '') {
+            if (fnValue === '' || !(isNaN(fnValue))) {
                 Validator.errorBox(firstName);
-                Validator.firstName = false;
+                Validator.check1 = false;
             }
             else {
                 Validator.correctBox(firstName);
-                Validator.firstName = true;
+                Validator.check1 = true;
+                Validator.firstName = fnValue;
+                Validator.confirmation();
             };
         };
 
@@ -38,13 +52,15 @@ var Validator = {
             lnValue = lnValue.replace(/^\s+/, '').replace(/\s+$/, '');
 
             //Är strängen tom eller whitespace körs errorBox. Annars körs correctBox.
-            if (lnValue === ''|| !(isNaN(lnValue))) {
+            if (lnValue === '' || !(isNaN(lnValue))) {
                 Validator.errorBox(lastName);
-                Validator.lastName = false;
+                Validator.check2 = false;
             }
             else {
                 Validator.correctBox(lastName);
-                Validator.lastName = true;
+                Validator.check2 = true;
+                Validator.lastName = lnValue;
+                Validator.confirmation();
             };
         };
 
@@ -57,12 +73,14 @@ var Validator = {
             //Är strängen tom eller whitespace körs errorBox. Annars körs correctBox.
             if (format.test(pcValue) === false) {
                 Validator.errorBox(postalCode);
-                Validator.postalCode = false;
+                Validator.check3 = false;
             }
             else {
                 pcValue = pcValue.replace(format, "$2$3");
                 Validator.correctBox(postalCode);
-                Validator.postalCode = true;
+                Validator.check3 = true;
+                Validator.postalCode = pcValue;
+                Validator.confirmation();
             };
         };
 
@@ -74,11 +92,13 @@ var Validator = {
             //Är strängen tom eller whitespace körs errorBox. Annars körs correctBox.
             if (check.test(eMail.value) === false) {
                 Validator.errorBox(eMail);
-                Validator.eMail = false;
+                Validator.check4 = false;
             }
             else {
                 Validator.correctBox(eMail);
-                Validator.eMail = true;
+                Validator.check4 = true;
+                Validator.eMail = eMail.value;
+                Validator.confirmation();
             };
         };
     },
@@ -161,6 +181,21 @@ var Validator = {
                 };
             };
 
+        };
+    },
+
+    confirmation: function () {
+
+        // Ändrar färg på knappen och gör den klickbar.
+        if (Validator.check1 === true && Validator.check2 === true && Validator.check3 === true && Validator.check4 === true) {
+            console.log("Test");
+            var button = document.getElementById("button");
+            button.className = "button";
+
+            button.onclick = function () {
+                confirm("First name: " + Validator.firstName + "\nLast name: " + Validator.lastName + "\nPostal code: " + Validator.postalCode + "\nE-mail: " + Validator.eMail);
+
+            };
         };
     }
 
