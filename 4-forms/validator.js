@@ -1,8 +1,7 @@
 "use strict"
 
 var Validator = {
-
-    form: document.getElementById("form"),
+    // Globala variabler.
     check1: false,
     check2: false,
     check3: false,
@@ -15,6 +14,7 @@ var Validator = {
 
     init: function (e) {
 
+        // Variabler för check utav textfälten.
         var firstName = document.getElementById("firstName");
         var lastName = document.getElementById("lastName");
         var postalCode = document.getElementById("postalCode");
@@ -188,13 +188,24 @@ var Validator = {
 
         // Ändrar färg på knappen och gör den klickbar.
         if (Validator.check1 === true && Validator.check2 === true && Validator.check3 === true && Validator.check4 === true) {
-            console.log("Test");
             var button = document.getElementById("button");
             button.className = "button";
 
+            // Skickar formuläret ifall användaren klickar på "OK", annars hamnar man vid formuläret igen.
             button.onclick = function () {
-                confirm("First name: " + Validator.firstName + "\nLast name: " + Validator.lastName + "\nPostal code: " + Validator.postalCode + "\nE-mail: " + Validator.eMail);
 
+                // Togglar en grå bakgrund.
+                var el = document.getElementById("overlay");
+                el.style.visibility = (el.style.visibility == "visible") ? "hidden" : "visible";
+
+                var r = confirm("First name: " + Validator.firstName + "\nLast name: " + Validator.lastName + "\nPostal code: " + Validator.postalCode + "\nE-mail: " + Validator.eMail);
+                if (r === true) {
+                    return true;
+                }
+                else {
+                    el.style.visibility = (el.style.visibility == "hidden") ? "visible" : "hidden";
+                    return false;
+                };
             };
         };
     }

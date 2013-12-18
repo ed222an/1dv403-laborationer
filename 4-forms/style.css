@@ -1,4 +1,23 @@
 ﻿/*General attributes*/
+body {
+     height:100%;
+     margin:0;
+     padding:0;
+}
+
+#overlay {
+    visibility:hidden;
+     position: absolute;
+     left: 0px;
+     top: 0px;
+     width:100%;
+     height:100%;
+     text-align:center;
+     z-index: 1000;
+     background-image:url(transparent.png);
+     opacity:0.6;
+     filter:alpha(opacity=60);
+}
 
 #container {
     margin:auto;
@@ -84,4 +103,12 @@ input:focus {
 .button {
     color:white;
     background-color:lightseagreen;
+}
+
+.hidden {
+    visibility:hidden;
+}
+
+.shown {
+    visibility:visible;
 }
