@@ -52,7 +52,7 @@ var Validator = {
 
             // Variabel för testning av strängen.
             var pcValue = postalCode.value;
-            var format = /^[SE]*[\s]*[0-9]{3}[\s\-]*[0-9]{2}$/;
+            var format = /^([SE]*)\s*(\d{3})[\s\-]*(\d\d)$/;
 
             //Är strängen tom eller whitespace körs errorBox. Annars körs correctBox.
             if (format.test(pcValue) === false) {
@@ -60,9 +60,7 @@ var Validator = {
                 Validator.postalCode = false;
             }
             else {
-                console.log(pcValue);
-                pcValue = pcValue.replaceAll(/^[0-9]{5}$/); //                                                                  JOBBA ÄR NÄSTA GÅNG!!!!
-                console.log(pcValue);
+                pcValue = pcValue.replace(format, "$2$3");
                 Validator.correctBox(postalCode);
                 Validator.postalCode = true;
             };
