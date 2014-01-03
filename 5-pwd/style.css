@@ -70,3 +70,18 @@ body, p { margin:0; padding:0}
     border:1px solid black;
     border-radius: 15px;
 }
+
+#imageViewer {
+    height:600px;
+    width:500px;
+    margin-left:2%;
+    margin-top:2%;
+    background-color:brown;
+    position:absolute;
+    border-radius: 5px;
+    z-index:1;
+}
+
+.hidden {
+    visibility:hidden;
+}
