@@ -8,16 +8,28 @@ var imageContainer = {
         var openButton = document.getElementById("button");
         var closeButton = document.getElementById("closeButton");
         var imageContainer = document.getElementById("imageContainer");
+        var toggle = false;
 
         // Desktopknappens klickfunktion.
         openButton.onclick = function () {
 
-            imageContainer.className = "visible";
+            // Togglefunktion för menyknappen.
+            switch(toggle)
+            {
+                case false:
+                    imageContainer.className = "visible";
+                    toggle = true;
+                    break;
+                case true:
+                    imageContainer.className = "hidden";
+                    toggle = false;
+                    break;
+            }
         }
 
         // Bildfönstrets klickfunktion.
         closeButton.onclick = function () {
-
+            toggle = false;
             imageContainer.className = "hidden";
         }
 

@@ -91,7 +91,7 @@ body, p { margin:0; padding:0}
     width:500px;
     margin-left:2%;
     margin-top:2%;
-    background-color:saddlebrown;
+    background-color:#2B1503;
     background-image:url('headericon.png');
     background-repeat:no-repeat;
     background-size:30px;
@@ -106,12 +106,23 @@ body, p { margin:0; padding:0}
 }
 
 /* Headertexten */
-#imageContainer p {
+#header {
     float:left;
     margin-left:10%;
     margin-top:2%;
     font-weight:bold;
     font-family:Verdana;
+    color:white;
+}
+
+/* Statusbar */
+#statusBar {
+    margin-left:7%;
+    margin-top:1%;
+    font-style:italic;
+    font-family:'Arial';
+    font-size:14px;
+    color:lightgray;
 }
 
 /* Fönstret för bilderna */
