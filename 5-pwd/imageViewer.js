@@ -1,27 +1,33 @@
 "use strict"
 
-var imageContainer = {
+var imageViewer = {
 
     init: function (e) {
+
+        //http://homepage.lnu.se/staff/tstjo/labbyServer/imgviewer/
+        // Ajaxload.info.
 
         // Variabler.
         var openButton = document.getElementById("button");
         var closeButton = document.getElementById("closeButton");
         var imageContainer = document.getElementById("imageContainer");
         var toggle = false;
+        var objectArray = [];
 
         // Desktopknappens klickfunktion.
         openButton.onclick = function () {
 
             // Togglefunktion för menyknappen.
-            switch(toggle)
-            {
+            switch (toggle) {
                 case false:
                     imageContainer.className = "visible";
+                    objectArray = imageViewer.ajaxCall();
                     toggle = true;
+                    console.log(objectArray);
                     break;
                 case true:
                     imageContainer.className = "hidden";
+                    loadingDiv.className = "hidden";
                     toggle = false;
                     break;
             }
@@ -31,9 +37,37 @@ var imageContainer = {
         closeButton.onclick = function () {
             toggle = false;
             imageContainer.className = "hidden";
+            loadingDiv.className = "hidden";
         }
 
+    },
+
+    // Laddar bilderna
+    ajaxCall: function () {
+
+        var objectArray = [];
+
+        // Laddningsikon & text visas när ajaxanrop sker.
+        var loadingDiv = document.getElementById("loadingDiv");
+        loadingDiv.className = "visible";
+
+        // AJAX-anrop för att hämta bilderna.
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4) {
+                if (xhr.status <= 200 && xhr.status < 300 || xhr.status === 304) {
+                    //alert(xhr.responseText);
+                    objectArray = JSON.parse(xhr.responseText);
+                    loadingDiv.className = "hidden";
+                }
+                else {
+                    console.log("Läsfel, status:" + xhr.status);
+                }
+            }
+        }
+        xhr.open("get", "http://homepage.lnu.se/staff/tstjo/labbyServer/imgviewer/", true);
+        xhr.send(null);
     }
 };
 
-window.onload = imageContainer.init;
+window.onload = imageViewer.init;
