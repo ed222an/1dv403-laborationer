@@ -1,18 +1,18 @@
 "use strict"
 
 var imageViewer = {
+    
+    objectArray: [],
 
     init: function (e) {
 
         //http://homepage.lnu.se/staff/tstjo/labbyServer/imgviewer/
-        // Ajaxload.info.
 
         // Variabler.
         var openButton = document.getElementById("button");
         var closeButton = document.getElementById("closeButton");
         var imageContainer = document.getElementById("imageContainer");
         var toggle = false;
-        var objectArray = [];
 
         // Desktopknappens klickfunktion.
         openButton.onclick = function () {
@@ -21,9 +21,8 @@ var imageViewer = {
             switch (toggle) {
                 case false:
                     imageContainer.className = "visible";
-                    objectArray = imageViewer.ajaxCall();
+                    imageViewer.ajaxCall();
                     toggle = true;
-                    console.log(objectArray);
                     break;
                 case true:
                     imageContainer.className = "hidden";
@@ -59,6 +58,7 @@ var imageViewer = {
                     //alert(xhr.responseText);
                     objectArray = JSON.parse(xhr.responseText);
                     loadingDiv.className = "hidden";
+                    imageViewer.objectArray = objectArray;
                 }
                 else {
                     console.log("Läsfel, status:" + xhr.status);
