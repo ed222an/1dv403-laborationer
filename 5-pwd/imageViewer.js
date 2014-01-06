@@ -1,17 +1,14 @@
 "use strict"
 
 var imageViewer = {
-    
-    objectArray: [],
 
     init: function (e) {
-
-        //http://homepage.lnu.se/staff/tstjo/labbyServer/imgviewer/
 
         // Variabler.
         var openButton = document.getElementById("button");
         var closeButton = document.getElementById("closeButton");
         var imageContainer = document.getElementById("imageContainer");
+        var imageBox = document.getElementById("imageBox");
         var toggle = false;
 
         // Desktopknappens klickfunktion.
@@ -27,6 +24,7 @@ var imageViewer = {
                 case true:
                     imageContainer.className = "hidden";
                     loadingDiv.className = "hidden";
+                    imageBox.innerHTML = "";
                     toggle = false;
                     break;
             }
@@ -35,6 +33,7 @@ var imageViewer = {
         // Bildfönstrets klickfunktion.
         closeButton.onclick = function () {
             toggle = false;
+            imageBox.innerHTML = "";
             imageContainer.className = "hidden";
             loadingDiv.className = "hidden";
         }
@@ -55,10 +54,11 @@ var imageViewer = {
         xhr.onreadystatechange = function () {
             if (xhr.readyState === 4) {
                 if (xhr.status <= 200 && xhr.status < 300 || xhr.status === 304) {
-                    //alert(xhr.responseText);
+
+                    // Tolkar JSON, gömmer laddningsgifen & skickar med arrayen med objekt till nästa funktion.
                     objectArray = JSON.parse(xhr.responseText);
                     loadingDiv.className = "hidden";
-                    imageViewer.objectArray = objectArray;
+                    imageViewer.showPics(objectArray);
                 }
                 else {
                     console.log("Läsfel, status:" + xhr.status);
@@ -67,6 +67,45 @@ var imageViewer = {
         }
         xhr.open("get", "http://homepage.lnu.se/staff/tstjo/labbyServer/imgviewer/", true);
         xhr.send(null);
+    },
+
+    // Visar bilderna i fönstret.
+    showPics: function (objectArray) {
+
+        var imageBox = document.getElementById("imageBox");
+        var maxHeight = 0;
+        var maxWidth = 0;
+        console.log(objectArray);
+
+        // Loopar igenom arrayen förr att ta ut maxvärdena.
+        for (var i = 0; i < objectArray.length; i++) {
+
+            if (maxHeight < objectArray[i].thumbHeight) {
+                maxHeight = objectArray[i].thumbHeight;
+            }
+            if (maxWidth < objectArray[i].thumbWidth) {
+                maxWidth = objectArray[i].thumbWidth;
+            }
+        }
+
+        // Skapar en dynamisk css-klass med de största bildernas maxvärden som höjd & bredd.
+        var style = document.createElement("style");
+        style.type = "text/css";
+        style.innerHTML = ".size {height:" + maxHeight + "px;width:" + maxWidth + "px; }";
+        document.getElementsByTagName("head")[0].appendChild(style);
+
+        // Loopar igenom objectArray och lägger till bilderna i fönstret.
+        for (var i = 0; i < objectArray.length; i++) {
+
+            var imgDiv = document.createElement("div");
+            imgDiv.className = "size";
+
+            var img = document.createElement("img")
+            img.src = objectArray[i].thumbURL;
+
+            imgDiv.appendChild(img)
+            imageBox.appendChild(imgDiv);
+        }
     }
 };
 
