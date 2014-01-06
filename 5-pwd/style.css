@@ -55,9 +55,9 @@ html, body {
 #desktop {
     min-height:90%;
     margin:1%;
-    background-image:url('background1.jpg');
-    background-size:cover;
-    background-repeat:no-repeat;
+    background-image:url('bg.jpg');
+    /*background-size:cover;*/
+    /*background-repeat:no-repeat;*/
 }
 
 * html #desktop{height:100%;} /* för IE 6 */

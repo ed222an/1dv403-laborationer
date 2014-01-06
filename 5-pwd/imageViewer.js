@@ -73,6 +73,7 @@ var imageViewer = {
     showPics: function (objectArray) {
 
         var imageBox = document.getElementById("imageBox");
+        var desktop = document.getElementById("desktop");
         var maxHeight = 0;
         var maxWidth = 0;
         console.log(objectArray);
@@ -97,15 +98,32 @@ var imageViewer = {
         // Loopar igenom objectArray och lägger till bilderna i fönstret.
         for (var i = 0; i < objectArray.length; i++) {
 
+            var URL = objectArray[i].URL;
             var imgDiv = document.createElement("div");
-            imgDiv.className = "size";
-
+            var aTag = document.createElement("a");
             var img = document.createElement("img")
+
+            imgDiv.className = "size";
+            aTag.href = "#";
             img.src = objectArray[i].thumbURL;
 
-            imgDiv.appendChild(img)
+            aTag.appendChild(img);
+            imgDiv.appendChild(aTag);
             imageBox.appendChild(imgDiv);
+
+            imageViewer.switchBackground(URL, aTag);
         }
+    },
+
+    switchBackground: function (URL, aTag) {
+
+        // Klickfunktion för bilderna, byter bakgrund på desktopen
+        aTag.onclick = function (URL, aTag) {
+            return function () {
+                desktop.style.backgroundImage = "url(" + URL + ")";
+            }
+        }(URL, aTag);
+
     }
 };
 
