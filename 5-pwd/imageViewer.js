@@ -89,12 +89,6 @@ var imageViewer = {
             }
         }
 
-        // Skapar en dynamisk css-klass med de största bildernas maxvärden som höjd & bredd.
-        var style = document.createElement("style");
-        style.type = "text/css";
-        style.innerHTML = ".size {height:" + maxHeight + "px;width:" + maxWidth + "px; }";
-        document.getElementsByTagName("head")[0].appendChild(style);
-
         // Loopar igenom objectArray och lägger till bilderna i fönstret.
         for (var i = 0; i < objectArray.length; i++) {
 
@@ -103,7 +97,8 @@ var imageViewer = {
             var aTag = document.createElement("a");
             var img = document.createElement("img")
 
-            imgDiv.className = "size";
+            imgDiv.style.height = maxHeight + "px";
+            imgDiv.style.width = maxWidth + "px";
             aTag.href = "#";
             img.src = objectArray[i].thumbURL;
 
