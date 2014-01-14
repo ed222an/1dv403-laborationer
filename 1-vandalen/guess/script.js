@@ -8,10 +8,7 @@ window.onload = function() {
 	
 	// I denna funktion ska du skriva koden för att hantera "spelet"
     var guess = function (number) {
-        console.log("Det hemliga talet: " + secret); // Du når den yttre variabeln secret innifrån funktionen.
-        console.log("Du gissade: " + number); // Detta nummer är det som användaren gissade på.
-			
-        // Plats för förändring.
+
         count++;
 
         if (isNaN(number)) {
@@ -21,22 +18,17 @@ window.onload = function() {
             return [false, "Talet är utanför intervallet 0 - 100"];
         }
         else if (number > secret) {
-            console.log("Antal gissningar: " + count);
             return [false, "Det hemliga talet är lägre!"];
         }
         else if (number < secret) {
-            console.log("Antal gissningar: " + count);
             return [false, "Det hemliga talet är högre!"];
         }
         else if (number = secret) {
-            console.log("Antal gissningar: " + count);
             return [true, "Grattis du vann! Det hemliga talet var " + secret + " och du behövde " + count + " gissningar för att hitta det."];
         }
 	};
 	
 	// ------------------------------------------------------------------------------
-
-
 
 	// Kod för att hantera utskrift och inmatning. Denna ska du inte behöva förändra
 	var p = document.querySelector("#value"); // Referens till DOM-noden med id="#value"
@@ -53,6 +45,8 @@ window.onload = function() {
 		if(answer[0] === true){				// Om spelet är slut, avaktivera knappen.
 			submit.disabled = true;
 		}
+
+		input.value = ""; // Lagt till så det skrivna talet försvinner vid varje klick.
 	
 	});
 };
